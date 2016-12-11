@@ -89,20 +89,18 @@
             </div>
         </div>
 
-        <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label class="col-md-3 control-lable" for="userProfiles">Roles</label>
-                    <div class="col-md-7">
-                        <form:select path="userProfiles" items="${roles}" multiple="true" itemValue="id"
-                                     itemLabel="type" class="form-control input-sm"/>
-                        <div class="has-error">
-                            <form:errors path="userProfiles" class="help-inline"/>
-                        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-3 control-lable" for="userProfiles">Roles</label>
+                <div class="col-md-7">
+                    <form:select path="userProfiles" items="${roles}" multiple="true" itemValue="id"
+                                 itemLabel="type" class="form-control input-sm"/>
+                    <div class="has-error">
+                        <form:errors path="userProfiles" class="help-inline"/>
                     </div>
                 </div>
             </div>
-        </sec:authorize>
+        </div>
 
         <div class="row">
             <div class="form-actions floatRight">

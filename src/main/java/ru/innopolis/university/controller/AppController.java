@@ -1,7 +1,6 @@
 package ru.innopolis.university.controller;
 
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
