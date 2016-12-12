@@ -47,7 +47,7 @@
                                class="btn btn-block btn-primary btn-default" value="Log in">
                     </div>
                 </form>
-                <a href="<c:url value='/newuser' />">Register</a>
+                <a href="<c:url value='/register' />">Register</a>
             </div>
         </div>
     </div>
