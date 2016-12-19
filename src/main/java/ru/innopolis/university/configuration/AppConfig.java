@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -23,10 +24,8 @@ import ru.innopolis.university.converter.RoleToUserProfileConverter;
 @ComponentScan(basePackages = "ru.innopolis.university")
 public class AppConfig extends WebMvcConfigurerAdapter{
 
-
     @Autowired
     RoleToUserProfileConverter roleToUserProfileConverter;
-
 
     /**
      * Configure ViewResolvers to deliver preferred views.

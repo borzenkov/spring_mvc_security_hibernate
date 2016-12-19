@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import ru.innopolis.university.model.Duck;
 import ru.innopolis.university.service.DuckService;
 
@@ -21,14 +23,12 @@ public class RegisterController {
     DuckService duckService;
 
     @RequestMapping(value = { "/register" }, method = RequestMethod.GET)
-    public String newDuck(ModelMap model) {
-        Duck duck = new Duck();
-        model.addAttribute("duck", duck);
-        return "register";
+    public ModelAndView newDuck(ModelMap model) {
+        return new ModelAndView("register", "duck", new Duck());
     }
 
     @RequestMapping(value = { "/register" }, method = RequestMethod.POST)
-    public String saveDuck(@Valid Duck duck, BindingResult result,
+    public String saveDuck(@Valid @ModelAttribute("duck")Duck duck, BindingResult result,
                            ModelMap model) {
         if (result.hasErrors()) {
             return "registration";
@@ -36,7 +36,8 @@ public class RegisterController {
 
         duckService.saveDuck(duck);
 
-        System.out.println(duck.getName());
+        model.addAttribute("success", "User " + duck.getName() + " registered successfully");
+
         return "registrationsuccess";
     }
 }
