@@ -9,6 +9,7 @@ public class UserMapper extends ConfigurableMapper {
     public void configure(MapperFactory factory) {
         factory.classMap(User.class, UserDto.class)
                 .field("id", "id")
+                .field("version", "version")
                 .field("ssoId", "ssoId")
                 .field("password", "password")
                 .field("firstName", "firstName")

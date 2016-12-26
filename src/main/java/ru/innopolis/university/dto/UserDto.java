@@ -17,6 +17,15 @@ public class UserDto {
     private String lastName;
     private String email;
     private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
+    private long version;
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
+    }
 
     public Integer getId() {
         return id;
