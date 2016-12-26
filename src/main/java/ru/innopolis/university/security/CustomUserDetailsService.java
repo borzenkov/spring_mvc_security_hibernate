@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.innopolis.university.dto.UserDto;
 import ru.innopolis.university.model.User;
 import ru.innopolis.university.model.UserProfile;
 import ru.innopolis.university.service.UserService;
@@ -30,21 +31,21 @@ public class CustomUserDetailsService implements UserDetailsService{
     @Transactional(readOnly=true)
     public UserDetails loadUserByUsername(String ssoId)
             throws UsernameNotFoundException {
-        User user = userService.findBySSO(ssoId);
-        logger.info("User : {}", user);
-        if(user==null){
+        UserDto userDto = userService.findBySSO(ssoId);
+        logger.info("User : {}", userDto);
+        if(userDto==null){
             logger.info("User not found");
             throw new UsernameNotFoundException("Username not found");
         }
-        return new org.springframework.security.core.userdetails.User(user.getSsoId(), user.getPassword(),
-                true, true, true, true, getGrantedAuthorities(user));
+        return new org.springframework.security.core.userdetails.User(userDto.getSsoId(), userDto.getPassword(),
+                true, true, true, true, getGrantedAuthorities(userDto));
     }
 
 
-    private List<GrantedAuthority> getGrantedAuthorities(User user){
+    private List<GrantedAuthority> getGrantedAuthorities(UserDto userDto){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-        for(UserProfile userProfile : user.getUserProfiles()){
+        for(UserProfile userProfile : userDto.getUserProfiles()){
             logger.info("UserProfile : {}", userProfile);
             authorities.add(new SimpleGrantedAuthority("ROLE_"+userProfile.getType()));
         }

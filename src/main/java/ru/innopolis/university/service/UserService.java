@@ -2,14 +2,16 @@ package ru.innopolis.university.service;
 
 import java.util.List;
 
+import ru.innopolis.university.dto.UserDto;
 import ru.innopolis.university.model.User;
 
 
 public interface UserService {
 
-    User findById(int id);
+    UserDto findById(int id);
 
-    User findBySSO(String sso);
+    //User findBySSO(String sso);
+    UserDto findBySSO(String sso);
 
     void saveUser(User user);
 
@@ -17,7 +19,7 @@ public interface UserService {
 
     void deleteUserBySSO(String sso);
 
-    List<User> findAllUsers();
+    List<UserDto> findAllUsers();
 
     boolean isUserSSOUnique(Integer id, String sso);
 

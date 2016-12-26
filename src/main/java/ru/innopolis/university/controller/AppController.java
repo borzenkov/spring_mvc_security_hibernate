@@ -17,12 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.servlet.ModelAndView;
+import ru.innopolis.university.dto.UserDto;
 import ru.innopolis.university.model.User;
 import ru.innopolis.university.model.UserProfile;
 import ru.innopolis.university.service.UserProfileService;
@@ -50,6 +48,16 @@ public class AppController {
     @Autowired
     AuthenticationTrustResolver authenticationTrustResolver;
 
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleAllException(Exception ex) {
+
+        ModelAndView model = new ModelAndView("error");
+        model.addObject("errMsg", "this is Exception.class");
+
+        return model;
+
+    }
+
 
     /**
      * This method will list all existing users.
@@ -57,8 +65,8 @@ public class AppController {
     @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
 
-        List<User> users = userService.findAllUsers();
-        model.addAttribute("users", users);
+        List<UserDto> userDtos = userService.findAllUsers();
+        model.addAttribute("users", userDtos);
         model.addAttribute("loggedinuser", getPrincipal());
         return "userslist";
     }
@@ -112,11 +120,22 @@ public class AppController {
 
     /**
      * This method will provide the medium to update an existing user.
-     */
+     *//*
     @RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.GET)
     public String editUser(@PathVariable String ssoId, ModelMap model) {
         User user = userService.findBySSO(ssoId);
         model.addAttribute("user", user);
+        model.addAttribute("edit", true);
+        model.addAttribute("loggedinuser", getPrincipal());
+        return "registration";
+    }*/
+    /**
+     * This method will provide the medium to update an existing user.
+     */
+    @RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.GET)
+    public String editUser(@PathVariable String ssoId, ModelMap model) {
+        UserDto userDto = userService.findBySSO(ssoId);
+        model.addAttribute("user", userDto);
         model.addAttribute("edit", true);
         model.addAttribute("loggedinuser", getPrincipal());
         return "registration";

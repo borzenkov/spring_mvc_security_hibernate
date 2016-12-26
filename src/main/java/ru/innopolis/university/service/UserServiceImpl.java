@@ -1,13 +1,18 @@
 package ru.innopolis.university.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.innopolis.university.dao.UserDao;
+import ru.innopolis.university.dto.UserDto;
+import ru.innopolis.university.mapper.UserMapper;
 import ru.innopolis.university.model.User;
 
 
@@ -21,13 +26,30 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User findById(int id) {
-        return dao.findById(id);
+    public UserDto findById(int id) {
+        User user = dao.findById(id);
+
+        MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+        UserMapper userMapper = new UserMapper();
+        userMapper.configure(mapperFactory);
+
+        UserDto userDto = userMapper.map(user, UserDto.class);
+        return userDto;
     }
 
-    public User findBySSO(String sso) {
+    /*public User findBySSO(String sso) {
         User user = dao.findBySSO(sso);
         return user;
+    }*/
+    public UserDto findBySSO(String sso) {
+        User user = dao.findBySSO(sso);
+
+        MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+        UserMapper userMapper = new UserMapper();
+        userMapper.configure(mapperFactory);
+
+        UserDto userDto = userMapper.map(user, UserDto.class);
+        return userDto;
     }
 
     public void saveUser(User user) {
@@ -59,13 +81,29 @@ public class UserServiceImpl implements UserService{
         dao.deleteBySSO(sso);
     }
 
-    public List<User> findAllUsers() {
-        return dao.findAllUsers();
+    public List<UserDto> findAllUsers() {
+        List<User> users = dao.findAllUsers();
+
+        MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+        UserMapper userMapper = new UserMapper();
+        userMapper.configure(mapperFactory);
+
+        List<UserDto> userDtos = new ArrayList<UserDto>();
+        for(User user : users) {
+            UserDto userDto = userMapper.map(user, UserDto.class);
+            userDtos.add(userDto);
+        }
+
+        return userDtos;
     }
 
-    public boolean isUserSSOUnique(Integer id, String sso) {
+    /*public boolean isUserSSOUnique(Integer id, String sso) {
         User user = findBySSO(sso);
         return ( user == null || ((id != null) && (user.getId() == id)));
+    }*/
+    public boolean isUserSSOUnique(Integer id, String sso) {
+        UserDto userDto = findBySSO(sso);
+        return ( userDto == null || ((id != null) && (userDto.getId() == id)));
     }
 
 }
