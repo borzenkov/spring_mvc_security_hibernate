@@ -2,6 +2,7 @@ package ru.innopolis.university.dto;
 
 import ru.innopolis.university.model.UserProfile;
 
+import javax.persistence.Version;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,7 @@ public class UserDto {
     private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
     private int version;
 
+    @Version
     public int getVersion() {
         return version;
     }

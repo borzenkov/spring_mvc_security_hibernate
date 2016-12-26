@@ -7,9 +7,11 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
+@DynamicUpdate(value=true)
 @Table(name="APP_USER")
 public class User implements Serializable{
 
@@ -47,13 +49,14 @@ public class User implements Serializable{
     @Column(name="version")
     private int version;
 
+    @Version
     public int getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
+/*    public void setVersion(int version) {
         this.version = version;
-    }
+    }*/
 
     public Integer getId() {
         return id;
