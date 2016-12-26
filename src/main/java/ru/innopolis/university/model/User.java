@@ -44,8 +44,9 @@ public class User implements Serializable{
     private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
     @Version
+    @Column(name="version")
     private int version;
-    
+
     public int getVersion() {
         return version;
     }

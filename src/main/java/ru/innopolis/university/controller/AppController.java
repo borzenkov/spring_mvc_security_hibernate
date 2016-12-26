@@ -58,6 +58,11 @@ public class AppController {
 
     }
 
+    @RequestMapping(value = { "/exception" }, method = RequestMethod.GET)
+    public void exception() throws Exception {
+        throw new Exception();
+    }
+
 
     /**
      * This method will list all existing users.
