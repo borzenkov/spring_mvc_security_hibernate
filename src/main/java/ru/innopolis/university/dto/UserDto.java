@@ -17,13 +17,13 @@ public class UserDto {
     private String lastName;
     private String email;
     private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
-    private long version;
+    private int version;
 
-    public long getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(long version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 

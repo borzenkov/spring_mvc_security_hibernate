@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.persistence.Version;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -42,15 +43,14 @@ public class User implements Serializable{
             inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
     private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
-    private long version;
-
     @Version
-    @Column(name="version")
-    public long getVersion() {
+    private int version;
+    
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(long version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 
